@@ -6170,12 +6170,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"hypothesis@npm:^1.1747.0":
-  version: 1.1747.0
-  resolution: "hypothesis@npm:1.1747.0"
-  checksum: b85dfd8a82a94c807161745066522f862e6a8ccf2b9a7009fb543bd7c4fcc1352fcd34c0ca929fbf396395b959340a2d8afb5d70c122cf2fdf794f570ca73c97
+"hypothesis@portal:/Users/vihaangupta/Desktop/hypothesis/client::locator=hypothesis-browser-extension%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "hypothesis@portal:/Users/vihaangupta/Desktop/hypothesis/client::locator=hypothesis-browser-extension%40workspace%3A."
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "iconv-lite@npm:0.6.3, iconv-lite@npm:^0.6.2, iconv-lite@npm:^0.6.3":
   version: 0.6.3

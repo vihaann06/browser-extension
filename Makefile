@@ -1,4 +1,4 @@
-SETTINGS_FILE := settings/chrome-dev.json
+SETTINGS_FILE := settings/chrome-hypothes-is.json
 
 ROLLUP := node_modules/.bin/rollup
 ESLINT := node_modules/.bin/eslint
