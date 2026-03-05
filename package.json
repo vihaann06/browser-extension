@@ -55,6 +55,6 @@
   },
   "packageManager": "yarn@3.6.1",
   "resolutions": {
-    "hypothesis": "portal:/Users/vihaangupta/Desktop/hypothesis/client"
+    "hypothesis": "portal:./client"
   }
 }

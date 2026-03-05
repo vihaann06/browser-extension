@@ -1,86 +1,96 @@
-# Hypothesis browser extension(s)
+# Hypothesis Browser Extension — Tag-Based Highlight Colors
 
-[![BSD licensed](https://img.shields.io/badge/license-BSD-blue.svg)][license]
+A modified [Hypothesis](https://hypothes.is) browser extension that colors
+annotation highlights based on their tags. Uses the **standard Hypothesis API**
+— no custom server required.
 
-[license]: https://github.com/hypothesis/browser-extension/blob/main/LICENSE
+## Tag-to-Color Mapping
 
-The Hypothesis browser extensions allow you to annotate web documents using your
-[Hypothesis][service] account.
+| Tag        | Color  | Aliases                |
+| ---------- | ------ | ---------------------- |
+| `yellow`   | Yellow | `key`, `highlight`     |
+| `pink`     | Pink   | `review`               |
+| `orange`   | Orange | `important`            |
+| `green`    | Green  | `question`             |
+| `purple`   | Purple | `note`                 |
+| `grey`     | Grey   | `misc`                 |
 
-![Screenshot of Hypothesis client](/images/screenshot.png?raw=true)
+Tags are case-insensitive. The first matching tag on an annotation determines
+its color. Annotations without a color tag use the default Hypothesis styling.
 
-[service]: https://hypothes.is
+## Quick Start
 
-## Choose your browser below
+### Prerequisites
 
-| **Chrome**        | **Firefox**        |
-| ----------------- | ------------------ |
-| [![Chrome][0]][1] | [![Firefox][2]][3] |
-| **Now available** | **In development** |
+- [Node.js](https://nodejs.org/) (v18+)
+- [Yarn](https://yarnpkg.com/) (v3)
+- Chrome or Chromium-based browser
+- A free [hypothes.is](https://hypothes.is/signup) account
 
-[0]: /images/google-chrome.ico?raw=true 'Review and install for Chrome'
-[1]: https://chrome.google.com/webstore/detail/hypothesis-web-pdf-annota/bjfhmglciegochdpefhhlphglcehbmek
-[2]: /images/mozilla-firefox.ico?raw=true 'Nearly there...'
-[3]: #not-yet
+### Build
+
+```bash
+git clone --recursive https://github.com/vihaann06/browser-extension.git
+cd browser-extension
+yarn install
+make build
+```
+
+If you forgot `--recursive`, initialize the submodule manually:
+
+```bash
+git submodule update --init
+```
+
+### Load in Chrome
+
+1. Go to `chrome://extensions`
+2. Enable **Developer mode** (top-right toggle)
+3. Click **Load unpacked** and select the `build/` directory
+4. **Disable the official Hypothesis extension** if you have it installed (they
+   share the same extension ID for OAuth compatibility)
+
+### Use
+
+1. Navigate to any webpage
+2. Click the Hypothesis icon or press the toolbar button to open the sidebar
+3. Log in with your [hypothes.is](https://hypothes.is) account
+4. Annotate text and add a color tag (e.g. `pink`, `orange`, `green`)
+5. The highlight appears in the corresponding color
+
+## How It Works
+
+This fork adds tag-based coloring entirely on the client side. The modified
+[client](https://github.com/vihaann06/client) is included as a git submodule
+in the `client/` directory.
+
+Key changes in the client:
+
+- **`src/annotator/tag-highlight-color.ts`** — maps tags to CSS color classes
+- **`src/annotator/guest.ts`** — applies tag color when highlighting
+- **`src/sidebar/services/frame-sync.ts`** — passes `tags` to the guest frame
+- **`src/styles/annotator/highlights.scss`** — CSS for tag-based colors
+
+All annotation data is stored on and fetched from the public `hypothes.is` API.
+No custom server is needed.
 
 ## Development
 
-The code for the extensions is in the `src/` directory, and can be built into a
-browser extension by running:
+The extension wraps the Hypothesis client. The client submodule is automatically
+built when you run `make build`. To rebuild after making changes to the client:
 
-    make build
+```bash
+make build
+```
 
-Once this is done you should be able to load the `build/` directory as an
-unpacked extension.
+Then reload the extension in `chrome://extensions`.
 
-The extension code has a test suite, which you can run using:
+To build only the client:
 
-    make test
-
-Note that the browser extensions are for the most part just a wrapper around the
-[Hypothesis client][client]. Depending on what you're interested in working on,
-you may need to check out the client repository too. Once you have checked out and
-built the Hypothesis client, you can use it by running the following command in
-the `browser-extension` repository:
-
-    yarn link ../client
-
-Where "../client" is the path to your Hypothesis client checkout. After that
-a call to `make build` will use the built client from the client repository.
-Please consult the client's documentation for instructions on building the
-client in a development environment.
-
-**Tip**: To **unlink** your dev browser extension from your dev client run
-`yarn unlink hypothesis` in your browser extension directory
-(see the [yarn uninstall docs](https://classic.yarnpkg.com/en/docs/cli/unlink/)).
-
-See [Building the extension](docs/building.md) for more information.
-
-[client]: https://github.com/hypothesis/client/
-
-## Community
-
-Join us on Slack for discussion. Please see [our contact
-page](https://web.hypothes.is/contact/) for details of how to register.
-
-For help using the extension, please see our [Help pages](https://web.hypothes.is/help/).
-
-If you'd like to contribute to the project, you should consider subscribing to
-the [development mailing list][ml], where we can help you plan your
-contributions.
-
-Please note that this project is released with a [Contributor Code of
-Conduct][coc]. By participating in this project you agree to abide by its terms.
-
-[ml]: https://groups.google.com/a/list.hypothes.is/forum/#!forum/dev
-[coc]: https://github.com/hypothesis/browser-extension/blob/main/CODE_OF_CONDUCT
+```bash
+make build-client
+```
 
 ## License
 
-The Hypothesis browser extensions are released under the [2-Clause BSD
-License][bsd2c], sometimes referred to as the "Simplified BSD License". Some
-third-party components are included. They are subject to their own licenses. All
-of the license information can be found in the included [LICENSE][license] file.
-
-[bsd2c]: http://www.opensource.org/licenses/BSD-2-Clause
-[license]: https://github.com/hypothesis/browser-extensions/blob/main/LICENSE
+Released under the [2-Clause BSD License](LICENSE).

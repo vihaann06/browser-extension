@@ -21,8 +21,12 @@ help:
 	@echo "make clean             Delete development artefacts (cached files, "
 	@echo "                       dependencies, etc)"
 
+.PHONY: build-client
+build-client:
+	cd client && yarn install && yarn build
+
 .PHONY: build
-build: node_modules/.uptodate extension
+build: build-client node_modules/.uptodate extension
 
 .PHONY: dev
 dev: node_modules/.uptodate
