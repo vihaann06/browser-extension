@@ -6170,9 +6170,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"hypothesis@portal:/Users/vihaangupta/Desktop/hypothesis/client::locator=hypothesis-browser-extension%40workspace%3A.":
+"hypothesis@portal:./client::locator=hypothesis-browser-extension%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "hypothesis@portal:/Users/vihaangupta/Desktop/hypothesis/client::locator=hypothesis-browser-extension%40workspace%3A."
+  resolution: "hypothesis@portal:./client::locator=hypothesis-browser-extension%40workspace%3A."
   languageName: node
   linkType: soft
 

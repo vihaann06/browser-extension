@@ -65,9 +65,11 @@ build/extension.bundle.js: src/background/*.ts rollup.config.js build/settings.j
 	$(ROLLUP) -c rollup.config.js
 build/manifest.json: src/manifest.json.mustache build/settings.json
 	$(MUSTACHE) build/settings.json $< > $@
-build/client/build: node_modules/hypothesis/build/manifest.json
+build/client/build: force client/build
+	@echo "Copying client/build into build/client/build..."
+	@rm -rf $@
 	@mkdir -p $@
-	cp -R node_modules/hypothesis/build/* $@
+	cp -R client/build/* $@
 	@# Replace boot template with extension-specific URLs.
 	node tools/render-boot-template.js $@/boot-template.js $@/boot.js
 	rm $@/boot-template.js
